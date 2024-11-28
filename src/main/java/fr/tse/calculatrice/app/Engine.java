@@ -1,5 +1,3 @@
-//ss
-
 package main.java.fr.tse.calculatrice.app;
 
 import javax.script.ScriptEngine;

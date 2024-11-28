@@ -18,6 +18,10 @@ public class ButtonsOperations implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        display.setText(display.getText() + " " + operation + " ");
+        if (display.getText().equals("0")) {
+            display.setText(operation);
+        } else {
+            display.setText(display.getText() + " " + operation + " ");
+        }
     }
 }

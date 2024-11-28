@@ -22,7 +22,7 @@ public class SciButton implements ActionListener {
             String expression = display.getText();
             switch (operation) {
                 case "log":
-                    expression = "Math.log(" + expression + ")";
+                    expression = "Math.log10(" + expression + ")";
                     break;
                 case "exp":
                     expression = "Math.exp(" + expression + ")";

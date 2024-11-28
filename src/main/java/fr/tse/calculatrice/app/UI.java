@@ -32,12 +32,12 @@ public class UI extends JFrame {
             "4", "5", "6", "*",
             "1", "2", "3", "-",
             "0", "C", "=", "+",
-            "%", "(" , ")", "SCI"
+            "%", "(", ")", "SCI"
         };
     
 
     for (String text : buttons) {
-        JButton button = new JButton();
+        JButton button = new JButton(text); // Définir le texte du bouton ici
         if (text.matches("[0-9]")) {
             button.addActionListener(new AddListenersToButton(display, text));
         } else if (text.equals("C")) {

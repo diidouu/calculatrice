@@ -2,18 +2,21 @@ package main.java.fr.tse.calculatrice.app;
 
 import javax.swing.*;
 import java.awt.*;
+import main.java.fr.tse.calculatrice.app.listeners.*;
 
 public class UI extends JFrame {
     private JTextField display;
     private JPanel panel;
+    private Engine engine;
 
     public UI() {
+        engine = new Engine();
         setTitle("Calculatrice TD7");
-        setSize(250,250);
+        setSize(400,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         
-        display = new JTextField(0);
+        display = new JTextField("0");
         display.setEditable(false);
         add(display, BorderLayout.NORTH);
 
@@ -35,6 +38,15 @@ public class UI extends JFrame {
 
     for (String text : buttons) {
         JButton button = new JButton();
+        if (text.matches("[0-9]")) {
+            button.addActionListener(new AddListenersToButton(display, text));
+        } else if (text.equals("C")) {
+            button.addActionListener(new CButton(display));
+        } else if (text.equals("=")) {
+            button.addActionListener(new EnterButton(display, engine));
+        } else {
+            button.addActionListener(new ButtonsOperations(display, text, engine));
+        }
         panel.add(button);    
     }
 }

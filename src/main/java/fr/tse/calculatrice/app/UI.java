@@ -38,6 +38,7 @@ public class UI extends JFrame {
 
     for (String text : buttons) {
         JButton button = new JButton();
+        button.setText(text);
         if (text.matches("[0-9]")) {
             button.addActionListener(new AddListenersToButton(display, text));
         } else if (text.equals("C")) {

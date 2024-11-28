@@ -11,7 +11,7 @@ public class AddListenersToButton implements ActionListener {
     public AddListenersToButton(JTextField display, String valeur) {
         this.display = display;
         this.valeur = valeur;
-    } 
+      
 
     @Override
     public void actionPerformed(ActionEvent e) {

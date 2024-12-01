@@ -3,54 +3,55 @@ package main.java.fr.tse.calculatrice.app.listeners;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.fr.tse.calculatrice.app.Engine;
+import main.java.fr.tse.calculatrice.app.Operation;
 
 public class SciButton implements ActionListener {
     private JTextField display;
     private String operation;
-    private Engine engine;
 
-    public SciButton(JTextField display, String operation, Engine engine) {
+    public SciButton(JTextField display, String operation) {
         this.display = display;
         this.operation = operation;
-        this.engine = engine;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             String expression = display.getText();
+            double result = 0;
             switch (operation) {
                 case "log":
-                    expression = "Math.log10(" + expression + ")";
+                    result = Operation.log(Double.parseDouble(expression));
                     break;
                 case "exp":
-                    expression = "Math.exp(" + expression + ")";
+                    result = Operation.exp(Double.parseDouble(expression));
                     break;
                 case "sin":
-                    expression = "Math.sin(" + expression + ")";
+                    result = Operation.sin(Double.parseDouble(expression));
                     break;
                 case "cos":
-                    expression = "Math.cos(" + expression + ")";
+                    result = Operation.cos(Double.parseDouble(expression));
                     break;
                 case "tan":
-                    expression = "Math.tan(" + expression + ")";
+                    result = Operation.tan(Double.parseDouble(expression));
                     break;
                 case "sqrt":
-                    expression = "Math.sqrt(" + expression + ")";
+                    result = Operation.sqrt(Double.parseDouble(expression));
                     break;
                 case "x^2":
-                    expression = "(" + expression + ")**2";
+                    result = Operation.pow(Double.parseDouble(expression), 2);
                     break;
                 case "x^3":
-                    expression = "(" + expression + ")**3";
+                    result = Operation.pow(Double.parseDouble(expression), 3);
                     break;
                 case "1/x":
-                    expression = "1/(" + expression + ")";
+                    result = 1 / Double.parseDouble(expression);
                     break;
+                default:
+                    display.setText(display.getText() + " " + operation + " ");
+                    return;
             }
-            String result = engine.evaluateExpression(expression);
-            display.setText(result);
+            display.setText(String.valueOf(result));
         } catch (Exception exception) {
             display.setText("Error");
         }

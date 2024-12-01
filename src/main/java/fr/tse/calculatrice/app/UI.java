@@ -10,11 +10,9 @@ public class UI extends JFrame {
     private JTextField display;
     private JPanel panel;
     private JPanel sciPanel;
-    private Engine engine;
     private Font digitalFont;
 
     public UI() {
-        engine = new Engine();
         setTitle("Calculatrice TD7");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,11 +74,11 @@ public class UI extends JFrame {
             } else if (text.equals("C")) {
                 button.addActionListener(new CButton(display));
             } else if (text.equals("=")) {
-                button.addActionListener(new EnterButton(display, engine));
+                button.addActionListener(new EnterButton(display));
             } else if (text.equals("SCI")) {
                 button.addActionListener(e -> sciPanel.setVisible(!sciPanel.isVisible()));
             } else {
-                button.addActionListener(new ButtonsOperations(display, text, engine));
+                button.addActionListener(new ButtonsOperations(display, text));
             }
             panel.add(button);
         }
@@ -99,7 +97,7 @@ public class UI extends JFrame {
             button.setForeground(Color.BLACK);
             button.setFocusPainted(false);
             button.setPreferredSize(new Dimension(100, 50)); // Agrandir les boutons scientifiques
-            button.addActionListener(new AddListenersToButton(display, text));
+            button.addActionListener(new SciButton(display, text));
             sciPanel.add(button);
         }
     }

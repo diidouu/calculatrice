@@ -3,25 +3,57 @@ package main.java.fr.tse.calculatrice.app.listeners;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import main.java.fr.tse.calculatrice.app.Engine;
+import main.java.fr.tse.calculatrice.app.Operation;
 
 public class ButtonsOperations implements ActionListener {
     private JTextField display;
     String operation;
-    private Engine engine;
 
-    public ButtonsOperations(JTextField display, String operation, Engine engine) {
+    public ButtonsOperations(JTextField display, String operation) {
         this.display = display;
         this.operation = operation;
-        this.engine = engine;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (display.getText().equals("0")) {
-            display.setText(operation);
-        } else {
-            display.setText(display.getText() + " " + operation + " ");
+        try {
+            String expression = display.getText();
+            double result = 0;
+            switch (operation) {
+                case "log":
+                    result = Operation.log(Double.parseDouble(expression));
+                    break;
+                case "exp":
+                    result = Operation.exp(Double.parseDouble(expression));
+                    break;
+                case "sin":
+                    result = Operation.sin(Double.parseDouble(expression));
+                    break;
+                case "cos":
+                    result = Operation.cos(Double.parseDouble(expression));
+                    break;
+                case "tan":
+                    result = Operation.tan(Double.parseDouble(expression));
+                    break;
+                case "sqrt":
+                    result = Operation.sqrt(Double.parseDouble(expression));
+                    break;
+                case "x^2":
+                    result = Operation.pow(Double.parseDouble(expression), 2);
+                    break;
+                case "x^3":
+                    result = Operation.pow(Double.parseDouble(expression), 3);
+                    break;
+                case "1/x":
+                    result = 1 / Double.parseDouble(expression);
+                    break;
+                default:
+                    display.setText(display.getText() + " " + operation + " ");
+                    return;
+            }
+            display.setText(String.valueOf(result));
+        } catch (Exception exception) {
+            display.setText("Error");
         }
     }
 }

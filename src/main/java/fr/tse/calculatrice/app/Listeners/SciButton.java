@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import main.java.fr.tse.calculatrice.app.Operation;
 
-public class ButtonsOperations implements ActionListener {
+public class SciButton implements ActionListener {
     private JTextField display;
-    String operation;
+    private String operation;
 
-    public ButtonsOperations(JTextField display, String operation) {
+    public SciButton(JTextField display, String operation) {
         this.display = display;
         this.operation = operation;
     }

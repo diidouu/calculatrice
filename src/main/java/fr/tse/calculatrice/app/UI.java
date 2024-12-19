@@ -5,6 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import main.java.fr.tse.calculatrice.app.listeners.*;
+import javax.swing.UIManager;
 
 public class UI extends JFrame {
     private JTextField display;
@@ -13,10 +14,17 @@ public class UI extends JFrame {
     private Font digitalFont;
 
     public UI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setTitle("Calculatrice TD7");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10, 10)); // Ajouter des marges
+        getContentPane().setBackground(new Color(240, 240, 240)); // Fond gris clair
 
         // Charger la police Digital-7
         try {
@@ -35,20 +43,27 @@ public class UI extends JFrame {
         display.setBackground(Color.BLACK);
         display.setForeground(Color.GREEN);
         display.setHorizontalAlignment(JTextField.RIGHT);
-        display.setPreferredSize(new Dimension(400, 50));
-        add(display, BorderLayout.NORTH);
+        display.setPreferredSize(new Dimension(350, 60));
+        display.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel displayPanel = new JPanel(new BorderLayout());
+        displayPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        displayPanel.add(display);
+        add(displayPanel, BorderLayout.NORTH);
 
         // Configuration du panneau principal
         panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 4, 5, 5)); // Ajuster la grille pour inclure tous les boutons
-        panel.setBackground(Color.DARK_GRAY);
+        panel.setLayout(new GridLayout(5, 4, 8, 8));
+        panel.setBackground(new Color(240, 240, 240));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         addButtons();
         add(panel, BorderLayout.CENTER);
 
         // Configuration du panneau scientifique
         sciPanel = new JPanel();
-        sciPanel.setLayout(new GridLayout(2, 4, 5, 5)); // Ajuster la grille pour les boutons scientifiques
-        sciPanel.setBackground(Color.DARK_GRAY);
+        sciPanel.setLayout(new GridLayout(2, 4, 8, 8));
+        sciPanel.setBackground(new Color(240, 240, 240));
+        sciPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         addScientificButtons();
         sciPanel.setVisible(false);
         add(sciPanel, BorderLayout.SOUTH);
@@ -66,9 +81,14 @@ public class UI extends JFrame {
         for (String text : buttons) {
             JButton button = new JButton(text);
             button.setFont(digitalFont.deriveFont(18f));
-            button.setBackground(Color.LIGHT_GRAY);
+            button.setOpaque(true);
+            button.setBackground(new Color(128, 128, 128)); // Gris plus foncé
             button.setForeground(Color.BLACK);
             button.setFocusPainted(false);
+            button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            button.setContentAreaFilled(true);
+            button.setBorderPainted(false);
+
             if (text.matches("[0-9]|[.]")) {
                 button.addActionListener(new AddListenersToButton(display, text));
             } else if (text.equals("C")) {
@@ -93,10 +113,15 @@ public class UI extends JFrame {
         for (String text : scientificButtons) {
             JButton button = new JButton(text);
             button.setFont(digitalFont.deriveFont(18f));
-            button.setBackground(Color.LIGHT_GRAY);
+            button.setOpaque(true);
+            button.setBackground(new Color(128, 128, 128)); // Gris plus foncé
             button.setForeground(Color.BLACK);
             button.setFocusPainted(false);
             button.setPreferredSize(new Dimension(100, 50)); // Agrandir les boutons scientifiques
+            button.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            button.setContentAreaFilled(true);
+            button.setBorderPainted(false);
+
             button.addActionListener(new SciButton(display, text));
             sciPanel.add(button);
         }
@@ -104,8 +129,8 @@ public class UI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            UI calculette = new UI();
-            calculette.setVisible(true);
+            UI calculator = new UI();
+            calculator.setVisible(true);
         });
     }
 }

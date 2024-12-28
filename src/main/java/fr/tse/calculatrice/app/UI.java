@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import main.java.fr.tse.calculatrice.app.listeners.*;
-import javax.swing.UIManager;
 
 public class UI extends JFrame {
     private JTextField display;
@@ -26,11 +26,15 @@ public class UI extends JFrame {
         setLayout(new BorderLayout(10, 10)); // Ajouter des marges
         getContentPane().setBackground(new Color(240, 240, 240)); // Fond gris clair
 
-        // Charger la police Digital-7
-        try {
-            digitalFont = Font.createFont(Font.TRUETYPE_FONT, new File("path/to/digital-7.ttf")).deriveFont(24f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(digitalFont);
+        // Charger la police Digital-7 à partir des ressources
+        try (InputStream is = getClass().getResourceAsStream("/digital-7.ttf")) {
+            if (is != null) {
+                digitalFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(24f);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(digitalFont);
+            } else {
+                throw new IOException("Police non trouvée");
+            }
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
             digitalFont = new Font("Monospaced", Font.BOLD, 24); // Police de secours

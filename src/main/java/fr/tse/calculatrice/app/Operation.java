@@ -23,47 +23,46 @@ public class Operation {
                 continue;
 
             // Si le caractère est un chiffre ou un point décimal
-            // On construit le nombre complet en lisant les caractères suivants
             if (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.') {
                 StringBuilder sbuf = new StringBuilder();
-                // There may be more than one digits in number
+                // Il peut y avoir plusieurs chiffres dans le nombre
                 while (i < tokens.length && (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.'))
                     sbuf.append(tokens[i++]);
                 values.push(Double.parseDouble(sbuf.toString()));
                 i--;
             }
 
-            // Current token is an opening brace, push it to 'ops'
+            // Si c'est une parenthèse ouvrante, on l'ajoute aux opérateurs
             else if (tokens[i] == '(')
                 ops.push(tokens[i]);
 
-            // Closing brace encountered, solve entire brace
+            // Si c'est une parenthèse fermante, on résout toute la parenthèse
             else if (tokens[i] == ')') {
                 while (ops.peek() != '(')
                     values.push(applyOp(ops.pop(), values.pop(), values.pop()));
                 ops.pop();
             }
 
-            // Current token is an operator
+            // Si c'est un opérateur
             else if (tokens[i] == '+' || tokens[i] == '-' ||
                     tokens[i] == '*' || tokens[i] == '/') {
-                // While top of 'ops' has same or greater precedence to current
-                // token, which is an operator. Apply operator on top of 'ops'
-                // to top two elements in values stack
+                // Tant que le sommet de 'ops' a une précédence supérieure ou égale
+                // à l'opérateur courant, on applique l'opérateur du sommet
+                // aux deux premiers éléments de la pile des valeurs
                 while (!ops.empty() && hasPrecedence(tokens[i], ops.peek()))
                     values.push(applyOp(ops.pop(), values.pop(), values.pop()));
 
-                // Push current token to 'ops'.
+                // On ajoute l'opérateur courant à la pile des opérateurs
                 ops.push(tokens[i]);
             }
         }
 
-        // Entire expression has been parsed at this point, apply remaining
-        // ops to remaining values
+        // L'expression a été entièrement analysée, on applique les opérateurs restants
+        // aux valeurs restantes
         while (!ops.empty())
             values.push(applyOp(ops.pop(), values.pop(), values.pop()));
 
-        // Top of 'values' contains result, return it
+        // Le sommet de la pile 'values' contient le résultat
         return values.pop();
     }
 

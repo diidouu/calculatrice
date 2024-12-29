@@ -5,15 +5,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import main.java.fr.tse.calculatrice.app.Operation;
 
+/**
+ * Gestionnaire d'événements pour les boutons d'opérations scientifiques
+ * Traite les opérations comme log, exp, sin, cos, etc.
+ */
 public class SciButton implements ActionListener {
     private JTextField display;
     private String operation;
 
+    /**
+     * Constructeur
+     * @param display Le champ d'affichage de la calculatrice
+     * @param operation Le type d'opération scientifique à effectuer
+     */
     public SciButton(JTextField display, String operation) {
         this.display = display;
         this.operation = operation;
     }
 
+    /**
+     * Exécute l'opération scientifique correspondante lorsqu'un bouton est cliqué
+     * @param e L'événement de clic
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {

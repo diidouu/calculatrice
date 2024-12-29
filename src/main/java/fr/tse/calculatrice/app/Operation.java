@@ -3,22 +3,27 @@ package main.java.fr.tse.calculatrice.app;
 import java.util.Stack;
 
 public class Operation {
-
+    /**
+     * Évalue une expression mathématique sous forme de chaîne de caractères
+     * @param expression L'expression mathématique à évaluer (ex: "2 + 3 * 4")
+     * @return Le résultat de l'évaluation de l'expression
+     */
     public static double evaluate(String expression) {
         char[] tokens = expression.toCharArray();
 
-        // Stack for numbers
+        // Pile pour stocker les nombres
         Stack<Double> values = new Stack<>();
 
-        // Stack for operators
+        // Pile pour stocker les opérateurs
         Stack<Character> ops = new Stack<>();
 
         for (int i = 0; i < tokens.length; i++) {
-            // Current token is a whitespace, skip it
+            // Ignore les espaces
             if (tokens[i] == ' ')
                 continue;
 
-            // Current token is a number, push it to stack for numbers
+            // Si le caractère est un chiffre ou un point décimal
+            // On construit le nombre complet en lisant les caractères suivants
             if (tokens[i] >= '0' && tokens[i] <= '9' || tokens[i] == '.') {
                 StringBuilder sbuf = new StringBuilder();
                 // There may be more than one digits in number
@@ -62,8 +67,12 @@ public class Operation {
         return values.pop();
     }
 
-    // Returns true if 'op2' has higher or same precedence as 'op1',
-    // otherwise returns false.
+    /**
+     * Vérifie la précédence entre deux opérateurs
+     * @param op1 Premier opérateur
+     * @param op2 Deuxième opérateur
+     * @return true si op2 a une précédence supérieure ou égale à op1
+     */
     public static boolean hasPrecedence(char op1, char op2) {
         if (op2 == '(' || op2 == ')')
             return false;
@@ -73,7 +82,14 @@ public class Operation {
             return true;
     }
 
-    // A utility method to apply an operator 'op' on operands 'a' and 'b'.
+    /**
+     * Applique un opérateur sur deux opérandes
+     * @param op L'opérateur à appliquer (+, -, *, /)
+     * @param b Le deuxième opérande
+     * @param a Le premier opérande
+     * @return Le résultat de l'opération
+     * @throws UnsupportedOperationException Si division par zéro
+     */
     public static double applyOp(char op, double b, double a) {
         switch (op) {
             case '+':
@@ -90,31 +106,67 @@ public class Operation {
         return 0;
     }
 
-    // Methods for scientific operations
+    // Méthodes pour les opérations scientifiques
+    /**
+     * Calcule le logarithme en base 10 d'un nombre
+     * @param a Le nombre
+     * @return Le logarithme de a
+     */
     public static double log(double a) {
         return Math.log10(a);
     }
 
+    /**
+     * Calcule l'exponentielle d'un nombre
+     * @param a L'exposant
+     * @return e^a
+     */
     public static double exp(double a) {
         return Math.exp(a);
     }
 
+    /**
+     * Calcule le sinus d'un nombre
+     * @param a L'angle en radians
+     * @return Le sinus de a
+     */
     public static double sin(double a) {
         return Math.sin(a);
     }
 
+    /**
+     * Calcule le cosinus d'un nombre
+     * @param a L'angle en radians
+     * @return Le cosinus de a
+     */
     public static double cos(double a) {
         return Math.cos(a);
     }
 
+    /**
+     * Calcule la tangente d'un nombre
+     * @param a L'angle en radians
+     * @return La tangente de a
+     */
     public static double tan(double a) {
         return Math.tan(a);
     }
 
+    /**
+     * Calcule la racine carrée d'un nombre
+     * @param a Le nombre
+     * @return La racine carrée de a
+     */
     public static double sqrt(double a) {
         return Math.sqrt(a);
     }
 
+    /**
+     * Calcule la puissance d'un nombre
+     * @param a La base
+     * @param b L'exposant
+     * @return a^b
+     */
     public static double pow(double a, double b) {
         return Math.pow(a, b);
     }
